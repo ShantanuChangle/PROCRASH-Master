@@ -124,7 +124,7 @@ function updateLoggedInContent() {
 function showNotification(websiteName, category) {
     chrome.notifications.create({
       type: 'basic',
-      iconUrl: 'icon.png',
+      iconUrl: 'Procrash_logo.png',
       title: 'Warning: Distraction Alert!',
       message: `You are currently on ${websiteName} which is found to be ${category}.`,
     });

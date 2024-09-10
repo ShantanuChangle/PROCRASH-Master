@@ -43,6 +43,6 @@ const UserSchema = new Mongoose.Schema({
         }
       }]
     }]
-  });
+  },);
 
 export default Mongoose.model('User', UserSchema);

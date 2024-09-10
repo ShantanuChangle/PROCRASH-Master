@@ -4,6 +4,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { PieChart, Pie, Tooltip, Cell, Legend } from "recharts";
+import { BsGraphUpArrow } from "react-icons/bs";
+
 
 function App() {
   const [userData, setUserData] = useState(null);
@@ -100,11 +102,11 @@ function App() {
     ];
 
     return (
-      <Paper elevation={3} style={{ padding: "20px" }}>
-        <Typography variant="h5">
-          Distracting vs Non-Distracting Sites
+      <Paper elevation={3} style={{ padding: "20px", backgroundColor:"black" }}>
+        <Typography variant="h6" style={{backgroundColor:"black", color: "white"}}>
+          Engagement Insights: Focused vs. Non-Focused Activity
         </Typography>
-        <PieChart width={400} height={400}>
+        <PieChart width={400} height={400} style={{backgroundColor: "black"}}> 
           <Pie
             dataKey="value"
             isAnimationActive={false}
@@ -112,19 +114,19 @@ function App() {
             cx="50%"
             cy="50%"
             // outerRadius={150}
-            innerRadius= {30}
-            outerRadius= {100}
-            paddingAngle= {5}
-            cornerRadius= {5}
-            startAngle= {-90}
-            endAngle= {180}
+            innerRadius={30}
+            outerRadius={100}
+            paddingAngle={5}
+            cornerRadius={5}
+            startAngle={-90}
+            endAngle={180}
             fill="#8884d8"
             label
           >
             {pieChartData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={entry.name === "Non-Distracting" ? "#00DF57" : "red"}
+                fill={entry.name === "Non-Distracting" ? "#06D001" : "#FF0000"}
               />
             ))}
           </Pie>
@@ -161,14 +163,14 @@ function App() {
     const totalTimeSpentFormatted = formatTime(totalTimeSpent);
 
     return (
-      <Paper elevation={3} style={{ padding: "20px" }}>
-        <Typography variant="h5">Website List</Typography>
-        <Typography variant="subtitle1">
-          Total Time Spent: {totalTimeSpentFormatted}
+      <Paper elevation={3} style={{ padding: "20px" , backgroundColor:"black" }}>
+        <Typography variant="h4" style={{backgroundColor:"black", color: "white"}}>Engagement Breakdown: Websites</Typography>
+        <Typography variant="h6" style={{fontWeight:"300", fontSize:"15px",backgroundColor:"black", color: "white"}}>
+         Overall Time Spent: {totalTimeSpentFormatted}
         </Typography>
         {data.websites.map((site) => (
-          <div key={site._id} style={{ marginBottom: "10px" }}>
-            <Typography variant="subtitle1">{site.url}</Typography>
+          <div key={site._id} style={{ marginBottom: "10px", color:"white" }}>
+            <Typography variant="subtitle1" color={"white"}>{site.url}</Typography>
             <div
               style={{
                 position: "relative",
@@ -183,7 +185,7 @@ function App() {
                 style={{
                   width: `${(site.timeSpentInSeconds / totalTimeSpent) * 100}%`,
                   backgroundColor:
-                    site.category === "distracting" ? "red" : "#00DF57",
+                    site.category === "distracting" ? "#FF0000" : "#06D001",
                   borderRadius: "5px",
                   height: "100%",
                 }}
@@ -196,9 +198,10 @@ function App() {
                   transform: "translateY(-51%)",
                   right: "2px",
                   fontWeight: 600,
-                  background: "#fff",
+                  background: "black",
                   padding: "1px 4px 3px",
                   borderRadius: "4px",
+                  color:"white"
                 }}
               >
                 {formatTime(site.timeSpentInSeconds)}
@@ -222,27 +225,45 @@ function App() {
   };
 
   return (
-    <div className="h-fit min-h-screen flex flex-col items-center justify-center px-2 py-12" style={{
-      backgroundImage: 'url("https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    }}>
-      <h1 className="text-3xl font-bold mb-8">Procrash Dashboard</h1>
-      <div className="mb-4 bg-white">
+    <div
+      className="relative h-fit min-h-screen flex flex-col items-center justify-center gap-14 px-2 py-12"
+      style={{
+        backgroundImage:
+          'url("https://images.pexels.com/photos/10479426/pexels-photo-10479426.jpeg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <img
+        src="Procrash_logo.png"
+        alt="logo"
+        className="h-12 w-12 rounded-full absolute left-12 top-12"
+      />
+      <h1 className="text-7xl font-bold text-white">PROCRASH DASHBOARD</h1>
+      <h1 className="flex gap-5 font-semibold items-center text-2xl text-red-100 uppercase italic">
+        Select a Date to get your daily analysis
+        <BsGraphUpArrow className="text-red-100 font-semibold" />
+      </h1>
+      <div className="mb-4 bg-gray-300">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Select Date"
             value={selectedDate}
             onChange={handleDateChange}
-            renderInput={(params) => <input {...params} className="border border-gray-300 px-2 py-1 rounded" />}
+            renderInput={(params) => (
+              <input
+                {...params}
+                className="border border-gray-300 px-2 py-1 rounded"
+              />
+            )}
           />
         </LocalizationProvider>
       </div>
-      <div className="flex justify-center" style={{width:'90%'}}>
-        <div className="mr-4" style={{width:'50%'}}>
+      <div className="flex justify-center" style={{ width: "90%" }}>
+        <div className="mr-4" style={{ width: "50%" }}>
           {renderPieChart()}
         </div>
-        <div className="" style={{width:'100%'}}>
+        <div className="" style={{ width: "100%" }}>
           {renderWebsiteList()}
         </div>
       </div>
